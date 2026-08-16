@@ -42,9 +42,11 @@ if (patchFeatures.length !== PATCH_CODES.size) {
 // Simplify via TopoJSON so shared borders stay coincident (no gaps/slivers
 // between neighboring countries after simplification). The 110m base and the
 // 50m patch features are simplified separately, at different tolerances,
-// since a shared tolerance tuned for continents would erase micro-states.
+// since a shared tolerance tuned for the base map would erase micro-states.
+// 0.3 keeps output size comparable to the ~73KB file this replaces in BootForm
+// (0.02 produced a 167KB file with no visible quality gain at this map's size).
 const topo = topology({ countries: raw });
-const simplified = simplify(presimplify(topo), 0.02);
+const simplified = simplify(presimplify(topo), 0.3);
 const simplifiedGeo = feature(simplified, simplified.objects.countries);
 
 const patchTopo = topology({ countries: { type: "FeatureCollection", features: patchFeatures } });
