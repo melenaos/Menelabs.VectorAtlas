@@ -111,6 +111,34 @@
 
   footer { padding: 32px 0 64px; text-align: center; font-size: 13px; color: var(--text-dim); }
   footer a { color: var(--text-dim); }
+
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .plan {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .plan h3 { font-size: 16px; margin: 0 0 4px; }
+  .plan .price { font-size: 32px; font-weight: 700; margin: 8px 0 4px; }
+  .plan .price span { font-size: 14px; font-weight: 400; color: var(--text-dim); }
+  .plan .eligibility { font-size: 13px; color: var(--text-dim); margin: 0 0 16px; }
+  .plan ul { font-size: 14px; color: var(--text-dim); margin: 0 0 20px; padding-left: 18px; }
+  .plan li { margin-bottom: 6px; }
+  .plan button {
+    margin-top: auto;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--accent-text);
+  }
+  .plan.free { background: var(--bg-alt); }
+  .plan.free button { background: transparent; color: var(--text); border-color: var(--border); }
 </style>
 </head>
 <body>
@@ -126,6 +154,7 @@
     </p>
     <div class="cta-row">
       <a class="btn btn-primary" href="https://github.com/melenaos/Menelabs.VectorAtlas">View on GitHub</a>
+      <a class="btn btn-secondary" href="#pricing">Pricing</a>
       <a class="btn btn-secondary" href="https://github.com/melenaos/Menelabs.VectorAtlas/tree/main/examples">See examples</a>
     </div>
   </header>
@@ -174,6 +203,44 @@ npm run generate</code></pre>
     </p>
   </section>
 
+  <section id="pricing">
+    <h2>Pricing</h2>
+    <div class="pricing-grid">
+      <div class="plan free">
+        <h3>Free</h3>
+        <p class="price">$0</p>
+        <p class="eligibility">Anyone</p>
+        <ul>
+          <li>The map, forever</li>
+          <li>CC BY 4.0: attribution required</li>
+        </ul>
+        <button type="button" onclick="location.href='https://github.com/melenaos/Menelabs.VectorAtlas'">Get started free</button>
+      </div>
+      <div class="plan">
+        <h3>Indie</h3>
+        <p class="price">$14 <span>one-time</span></p>
+        <p class="eligibility">Solo developers and small teams</p>
+        <ul>
+          <li>Removes the attribution requirement</li>
+          <li>Perpetual license</li>
+          <li>Unlimited projects</li>
+        </ul>
+        <button type="button" data-paddle-price="pri_01m05xze5w92ph4ac8wjpeex5a">Buy Indie license</button>
+      </div>
+      <div class="plan">
+        <h3>Business</h3>
+        <p class="price">$49 <span>one-time</span></p>
+        <p class="eligibility">Companies with over $500k annual revenue</p>
+        <ul>
+          <li>Removes the attribution requirement</li>
+          <li>Perpetual license</li>
+          <li>Unlimited projects</li>
+        </ul>
+        <button type="button" data-paddle-price="pri_01m05y08g0cmjxsqm32srmc54f">Buy Business license</button>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <p>
       <a href="https://github.com/melenaos/Menelabs.VectorAtlas">melenaos/Menelabs.VectorAtlas</a>
@@ -182,6 +249,17 @@ npm run generate</code></pre>
     </p>
   </footer>
 </div>
+
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+  Paddle.Initialize({ token: "live_f11647b7c4c2302804765a86fa6" });
+
+  for (const btn of document.querySelectorAll("[data-paddle-price]")) {
+    btn.addEventListener("click", () => {
+      Paddle.Checkout.open({ items: [{ priceId: btn.dataset.paddlePrice, quantity: 1 }] });
+    });
+  }
+</script>
 
 <script>
   fetch("https://cdn.jsdelivr.net/gh/melenaos/Menelabs.VectorAtlas@main/dist/world.svg")
