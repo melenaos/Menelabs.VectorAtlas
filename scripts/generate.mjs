@@ -26,8 +26,19 @@ const PATCH_CODES = new Set([
   "CV", "DM", "KM", "LC", "MT", "MU", "MV", "SC", "SG", "ST", "VC",
 ]);
 
-const raw = JSON.parse(readFileSync(SOURCE, "utf8"));
+const rawAll = JSON.parse(readFileSync(SOURCE, "utf8"));
 const raw50m = JSON.parse(readFileSync(SOURCE_50M, "utf8"));
+
+// Antarctica (AQ) is dropped entirely, not just simplified: no submitter IP ever
+// resolves there (this map exists to render country_breakdown choropleths), and
+// including it distorts the whole projection under an equirectangular fitSize -
+// Antarctica's landmass stretches into a wide band across the bottom of the map,
+// and BootForm's original map never included it for the same reason (its own
+// viewBox was cropped to exclude the far south).
+const raw = {
+  ...rawAll,
+  features: rawAll.features.filter((f) => f.properties.ISO_A2 !== "AQ"),
+};
 
 const patchFeatures = raw50m.features.filter((f) => {
   const code = f.properties.ISO_A2_EH || f.properties.ISO_A2;
