@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Examples &mdash; Menelabs.VectorAtlas</title>
+<meta name="description" content="Live, interactive examples of Menelabs.VectorAtlas: basic embed, choropleth heatmap, and clickable country selection.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f5f6f8;
+    --text: #1b1f24;
+    --text-dim: #57606a;
+    --border: #d8dee4;
+    --accent: #2563eb;
+    --accent-text: #ffffff;
+    --map-default: #e9edf1;
+    --map-hover: #c7d6f5;
+    --map-select: #2563eb;
+    --map-stroke: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --bg-alt: #161b22;
+      --text: #e6edf3;
+      --text-dim: #9198a1;
+      --border: #30363d;
+      --accent: #4f8cff;
+      --accent-text: #0d1117;
+      --map-default: #30363d;
+      --map-hover: #3d5a99;
+      --map-select: #4f8cff;
+      --map-stroke: #0d1117;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px 64px; }
+
+  header { padding: 48px 0 24px; }
+  .back { display: inline-block; margin-bottom: 16px; font-size: 14px; text-decoration: none; color: var(--text-dim); }
+  h1 { font-size: clamp(26px, 5vw, 36px); margin: 0 0 8px; }
+  header p { font-size: 16px; color: var(--text-dim); max-width: 620px; margin: 0; }
+
+  .example { padding: 32px 0; border-top: 1px solid var(--border); }
+  .example-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .example h2 { font-size: 19px; margin: 0; }
+  .example .source { font-size: 13px; white-space: nowrap; }
+  .example > p { font-size: 14px; color: var(--text-dim); margin: 0 0 16px; }
+
+  .demo-frame {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-alt);
+    padding: 16px;
+  }
+  .demo-frame svg { width: 100%; height: auto; display: block; }
+  .demo-frame .map-loading { text-align: center; color: var(--text-dim); padding: 40px 0; font-size: 14px; }
+
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* Basic embed demo */
+  #map-basic svg path { fill: var(--map-default); stroke: var(--map-stroke); stroke-width: 0.4; }
+  #map-basic svg path#us, #map-basic svg path#ca, #map-basic svg path#mx { fill: var(--accent); }
+
+  /* Choropleth heatmap demo */
+  #map-heatmap svg path { fill: var(--map-default); stroke: var(--map-stroke); stroke-width: 0.4; }
+  #map-heatmap svg path:hover { stroke: var(--text); stroke-width: 1; }
+  .legend { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 13px; color: var(--text-dim); }
+  .legend .bar { width: 160px; height: 10px; border-radius: 4px; background: linear-gradient(90deg, #dbe9ff, #0b3d91); }
+  #tooltip-heatmap {
+    position: fixed;
+    pointer-events: none;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: none;
+    z-index: 10;
+  }
+
+  /* Country select demo */
+  #map-select svg path { fill: var(--map-default); stroke: var(--map-stroke); stroke-width: 0.4; cursor: pointer; }
+  #map-select svg path:hover { fill: var(--map-hover); }
+  #map-select svg path.selected { fill: var(--map-select); }
+  .selected-list { margin-bottom: 12px; font-size: 14px; color: var(--text-dim); }
+  .selected-list button {
+    margin-left: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    border-radius: 6px;
+    padding: 2px 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <a class="back" href="index.html">&larr; Menelabs.VectorAtlas</a>
+    <h1>Examples</h1>
+    <p>Live, running copies of the patterns in the <a href="https://github.com/melenaos/Menelabs.VectorAtlas/tree/main/examples">examples/</a> folder. Every map below is the actual <code>dist/world.svg</code>, fetched and inlined the same way you'd do it in your own app.</p>
+  </header>
+
+  <section class="example">
+    <div class="example-head">
+      <h2>Basic embed</h2>
+      <a class="source" href="https://github.com/melenaos/Menelabs.VectorAtlas/blob/main/examples/basic-embed.html">View source on GitHub &rarr;</a>
+    </div>
+    <p>North America highlighted by targeting <code>#us</code>, <code>#ca</code>, <code>#mx</code> directly in CSS.</p>
+    <div class="demo-frame">
+      <div id="map-basic"><div class="map-loading">Loading&hellip;</div></div>
+    </div>
+  </section>
+
+  <section class="example">
+    <div class="example-head">
+      <h2>Choropleth heatmap</h2>
+      <a class="source" href="https://github.com/melenaos/Menelabs.VectorAtlas/blob/main/examples/choropleth-heatmap.html">View source on GitHub &rarr;</a>
+    </div>
+    <p>Color every country by a value, e.g. "submissions by country". Hover a country for its value.</p>
+    <div class="demo-frame">
+      <div class="legend"><span>0</span><div class="bar"></div><span id="legend-max"></span></div>
+      <div id="map-heatmap"><div class="map-loading">Loading&hellip;</div></div>
+    </div>
+  </section>
+
+  <section class="example">
+    <div class="example-head">
+      <h2>Clickable country select</h2>
+      <a class="source" href="https://github.com/melenaos/Menelabs.VectorAtlas/blob/main/examples/country-select.html">View source on GitHub &rarr;</a>
+    </div>
+    <p>Click a country to toggle its selection &mdash; useful for a "ship to these countries" or "restrict to these markets" control.</p>
+    <div class="demo-frame">
+      <div class="selected-list" id="selected-list"></div>
+      <div id="map-select"><div class="map-loading">Loading&hellip;</div></div>
+    </div>
+  </section>
+</div>
+
+<div id="tooltip-heatmap"></div>
+
+<script>
+  const SVG_URL = "https://cdn.jsdelivr.net/gh/melenaos/Menelabs.VectorAtlas@main/dist/world.svg";
+
+  function loadMap(containerId) {
+    return fetch(SVG_URL)
+      .then((r) => r.text())
+      .then((svg) => {
+        const el = document.getElementById(containerId);
+        el.innerHTML = svg;
+        return el;
+      })
+      .catch(() => {
+        document.getElementById(containerId).innerHTML =
+          '<p class="map-loading">Map unavailable right now.</p>';
+        return null;
+      });
+  }
+
+  // Basic embed: nothing further needed, CSS alone handles the highlight.
+  loadMap("map-basic");
+
+  // Choropleth heatmap
+  const heatmapData = {
+    us: 842, br: 511, de: 398, gb: 372, in: 355,
+    fr: 301, ca: 288, au: 240, jp: 233, es: 190,
+    it: 176, nl: 150, se: 120, pl: 98, mx: 84,
+    ar: 61, za: 48, ng: 33, eg: 27, gr: 19,
+  };
+  const heatmapMax = Math.max(...Object.values(heatmapData));
+  document.getElementById("legend-max").textContent = heatmapMax;
+
+  function colorFor(value) {
+    const t = value / heatmapMax;
+    const from = [219, 233, 255];
+    const to = [11, 61, 145];
+    const rgb = from.map((c, i) => Math.round(c + (to[i] - c) * t));
+    return `rgb(${rgb.join(",")})`;
+  }
+
+  loadMap("map-heatmap").then((container) => {
+    if (!container) return;
+    const tooltip = document.getElementById("tooltip-heatmap");
+    for (const [id, value] of Object.entries(heatmapData)) {
+      const path = container.querySelector("#" + id);
+      if (!path) continue;
+      path.style.fill = colorFor(value);
+      path.addEventListener("mousemove", (e) => {
+        tooltip.style.display = "block";
+        tooltip.style.left = e.clientX + 12 + "px";
+        tooltip.style.top = e.clientY + 12 + "px";
+        tooltip.textContent = `${id.toUpperCase()}: ${value}`;
+      });
+      path.addEventListener("mouseleave", () => {
+        tooltip.style.display = "none";
+      });
+    }
+  });
+
+  // Clickable country select
+  loadMap("map-select").then((container) => {
+    if (!container) return;
+    const selected = new Set();
+    const listEl = document.getElementById("selected-list");
+
+    function renderList() {
+      if (selected.size === 0) {
+        listEl.textContent = "No countries selected.";
+        return;
+      }
+      const codes = [...selected].sort().map((c) => c.toUpperCase()).join(", ");
+      listEl.innerHTML = `<strong>${selected.size}</strong> selected: ${codes} <button type="button" id="clear-selection">Clear</button>`;
+      document.getElementById("clear-selection").addEventListener("click", () => {
+        selected.clear();
+        for (const el of container.querySelectorAll("path.selected")) el.classList.remove("selected");
+        renderList();
+      });
+    }
+
+    for (const path of container.querySelectorAll("path[id]")) {
+      path.addEventListener("click", () => {
+        const id = path.id;
+        if (selected.has(id)) {
+          selected.delete(id);
+          path.classList.remove("selected");
+        } else {
+          selected.add(id);
+          path.classList.add("selected");
+        }
+        renderList();
+      });
+    }
+    renderList();
+  });
+</script>
+
+</body>
+</html>

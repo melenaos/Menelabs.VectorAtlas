@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clickable country select example</title>
+<style>
+  body { font-family: sans-serif; margin: 24px; max-width: 960px; }
+  #map svg { width: 100%; height: auto; }
+  #map svg path { fill: #e9edf1; stroke: #ffffff; stroke-width: 0.4; cursor: pointer; }
+  #map svg path:hover { fill: #c7d6f5; }
+  #map svg path.selected { fill: #2563eb; }
+
+  #selected-list { margin: 16px 0; font-size: 14px; }
+  #selected-list .empty { color: #57606a; }
+  button#clear { margin-left: 8px; font-size: 12px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h1>Clickable country select</h1>
+  <p>Click a country to toggle its selection. Useful for a "ship to these countries" or "restrict to these markets" control.</p>
+
+  <div id="selected-list"></div>
+  <div id="map"></div>
+
+  <script>
+    const selected = new Set();
+    const listEl = document.getElementById("selected-list");
+
+    function renderList() {
+      if (selected.size === 0) {
+        listEl.innerHTML = '<span class="empty">No countries selected.</span>';
+        return;
+      }
+      const codes = [...selected].sort().map((c) => c.toUpperCase()).join(", ");
+      listEl.innerHTML = `<strong>${selected.size}</strong> selected: ${codes} <button id="clear" type="button">Clear</button>`;
+      document.getElementById("clear").addEventListener("click", () => {
+        selected.clear();
+        for (const el of document.querySelectorAll("#map svg path.selected")) {
+          el.classList.remove("selected");
+        }
+        renderList();
+      });
+    }
+
+    fetch("../dist/world.svg")
+      .then((r) => r.text())
+      .then((svg) => {
+        document.getElementById("map").innerHTML = svg;
+
+        for (const path of document.querySelectorAll("#map svg path[id]")) {
+          path.addEventListener("click", () => {
+            const id = path.id;
+            if (selected.has(id)) {
+              selected.delete(id);
+              path.classList.remove("selected");
+            } else {
+              selected.add(id);
+              path.classList.add("selected");
+            }
+            renderList();
+          });
+        }
+
+        renderList();
+      });
+  </script>
+</body>
+</html>

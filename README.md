@@ -38,8 +38,10 @@ dropped from the map.
 
 ## Examples
 
-See [`examples/`](examples/) for a basic embed and a data-driven choropleth heatmap
-(hover tooltip, legend, color scale), both plain HTML with no build step or dependencies.
+Live versions run on the [examples page](https://melenaos.github.io/Menelabs.VectorAtlas/examples.html).
+Source for all three lives in [`examples/`](examples/): a basic embed, a data-driven
+choropleth heatmap (hover tooltip, legend, color scale), and a clickable country selector.
+Plain HTML, no build step or dependencies.
 
 ## License
 

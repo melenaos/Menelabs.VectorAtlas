@@ -154,8 +154,8 @@
     </p>
     <div class="cta-row">
       <a class="btn btn-primary" href="https://github.com/melenaos/Menelabs.VectorAtlas">View on GitHub</a>
-      <a class="btn btn-secondary" href="#pricing">Pricing</a>
-      <a class="btn btn-secondary" href="https://github.com/melenaos/Menelabs.VectorAtlas/tree/main/examples">See examples</a>
+      <!-- Pricing nav link hidden alongside the Pricing section below until Paddle account approval clears. -->
+      <a class="btn btn-secondary" href="examples.html">See examples</a>
     </div>
   </header>
 
@@ -198,10 +198,16 @@ cd Menelabs.VectorAtlas
 npm install
 npm run generate</code></pre>
     <p>
-      Full usage patterns, including a data-driven choropleth heatmap, live in the
-      <a href="https://github.com/melenaos/Menelabs.VectorAtlas/tree/main/examples">examples folder</a>.
+      Full usage patterns, including a data-driven choropleth heatmap and a clickable
+      country selector, are live on the <a href="examples.html">examples page</a>.
     </p>
   </section>
+
+  <!--
+    Pricing section hidden: Paddle account isn't approved for live checkout yet
+    (see conversation 2026-08-16). Don't remove - re-enable this whole <section>
+    once Paddle approval clears, and restore the "Pricing" nav link in the hero
+    CTA row above.
 
   <section id="pricing">
     <h2>Pricing</h2>
@@ -240,6 +246,7 @@ npm run generate</code></pre>
       </div>
     </div>
   </section>
+  -->
 
   <footer>
     <p>
@@ -255,6 +262,10 @@ npm run generate</code></pre>
   </footer>
 </div>
 
+<!--
+  Paddle Checkout wiring hidden alongside the Pricing section above - re-enable
+  both together once Paddle account approval clears.
+
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 <script>
   Paddle.Initialize({ token: "live_f11647b7c4c2302804765a86fa6" });
@@ -265,6 +276,7 @@ npm run generate</code></pre>
     });
   }
 </script>
+-->
 
 <script>
   fetch("https://cdn.jsdelivr.net/gh/melenaos/Menelabs.VectorAtlas@main/dist/world.svg")
