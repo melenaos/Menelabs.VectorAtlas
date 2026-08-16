@@ -1,0 +1,17 @@
+{
+  "name": "menelabs-vectoratlas",
+  "version": "1.0.0",
+  "description": "SVG world map generated from Natural Earth public domain data, with one <path> per country keyed by lowercase ISO 3166-1 alpha-2 code.",
+  "type": "module",
+  "private": true,
+  "license": "CC-BY-4.0",
+  "scripts": {
+    "generate": "node scripts/generate.mjs"
+  },
+  "dependencies": {
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0",
+    "topojson-server": "^3.0.1",
+    "topojson-simplify": "^3.0.3"
+  }
+}
