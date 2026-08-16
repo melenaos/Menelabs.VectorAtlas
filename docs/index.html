@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menelabs.VectorAtlas &mdash; free SVG world map for developers</title>
+<meta name="description" content="A free, lightweight SVG world map from Natural Earth. One path per country, id-keyed by ISO 3166-1 alpha-2 code. CC BY 4.0.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f5f6f8;
+    --text: #1b1f24;
+    --text-dim: #57606a;
+    --border: #d8dee4;
+    --accent: #2563eb;
+    --accent-text: #ffffff;
+    --map-fill: #6ea88f;
+    --map-fill-hover: #2563eb;
+    --map-stroke: #1b1f24;
+    --code-bg: #f0f2f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --bg-alt: #161b22;
+      --text: #e6edf3;
+      --text-dim: #9198a1;
+      --border: #30363d;
+      --accent: #4f8cff;
+      --accent-text: #0d1117;
+      --map-fill: #3f7a63;
+      --map-fill-hover: #4f8cff;
+      --map-stroke: #0d1117;
+      --code-bg: #161b22;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  header.hero { padding: 64px 0 40px; text-align: center; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  h1 { font-size: clamp(28px, 5vw, 42px); margin: 0 0 12px; }
+  .tagline { font-size: 18px; color: var(--text-dim); max-width: 620px; margin: 0 auto 28px; }
+
+  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid var(--border);
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+  .btn-secondary { color: var(--text); }
+
+  .map-frame {
+    margin: 40px 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-alt);
+    padding: 16px;
+  }
+  #map-holder { width: 100%; }
+  #map-holder svg { width: 100%; height: auto; display: block; }
+  #map-holder svg path {
+    fill: var(--map-fill);
+    stroke: var(--map-stroke);
+    stroke-width: 0.4;
+    transition: fill 0.1s ease;
+  }
+  #map-holder svg path:hover { fill: var(--map-fill-hover); }
+  .map-caption { text-align: center; font-size: 13px; color: var(--text-dim); margin-top: 8px; }
+  .map-loading { text-align: center; color: var(--text-dim); padding: 60px 0; font-size: 14px; }
+
+  section { padding: 32px 0; border-top: 1px solid var(--border); }
+  section h2 { font-size: 20px; margin: 0 0 16px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .card { padding: 0; }
+  .card h3 { font-size: 15px; margin: 0 0 6px; }
+  .card p { font-size: 14px; color: var(--text-dim); margin: 0; }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 13px;
+  }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  p code, li code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+
+  footer { padding: 32px 0 64px; text-align: center; font-size: 13px; color: var(--text-dim); }
+  footer a { color: var(--text-dim); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Free &middot; CC BY 4.0</span>
+    <h1>An SVG world map that just works</h1>
+    <p class="tagline">
+      Generated from Natural Earth. One <code>&lt;path&gt;</code> per country, id-keyed by
+      lowercase ISO 3166-1 alpha-2 code. Drop it into a choropleth, a heatmap,
+      or any SVG-based map UI.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/melenaos/Menelabs.VectorAtlas">View on GitHub</a>
+      <a class="btn btn-secondary" href="https://github.com/melenaos/Menelabs.VectorAtlas/tree/main/examples">See examples</a>
+    </div>
+  </header>
+
+  <div class="map-frame">
+    <div id="map-holder"><div class="map-loading">Loading map&hellip;</div></div>
+    <p class="map-caption">Live render of <code>dist/world.svg</code>. Hover a country.</p>
+  </div>
+
+  <section>
+    <h2>Why this exists</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Actually small</h3>
+        <p>Simplified 1:110m geometry keeps the file lightweight, not a multi-megabyte download.</p>
+      </div>
+      <div class="card">
+        <h3>Real IDs, not guesswork</h3>
+        <p>Every path is keyed by lowercase ISO 3166-1 alpha-2 code, so joining your data is a lookup, not a parsing project.</p>
+      </div>
+      <div class="card">
+        <h3>No linkware surprises</h3>
+        <p>Built straight from Natural Earth (public domain). Released under CC BY 4.0: use it, including commercially, with attribution.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Quick start</h2>
+    <pre><code>&lt;object type="image/svg+xml" data="world.svg"&gt;&lt;/object&gt;
+
+&lt;style&gt;
+  #ca { fill: steelblue; } /* target a country by its id */
+&lt;/style&gt;
+</code></pre>
+    <p>
+      Or generate your own copy from source:
+    </p>
+    <pre><code>git clone https://github.com/melenaos/Menelabs.VectorAtlas.git
+cd Menelabs.VectorAtlas
+npm install
+npm run generate</code></pre>
+    <p>
+      Full usage patterns, including a data-driven choropleth heatmap, live in the
+      <a href="https://github.com/melenaos/Menelabs.VectorAtlas/tree/main/examples">examples folder</a>.
+    </p>
+  </section>
+
+  <footer>
+    <p>
+      <a href="https://github.com/melenaos/Menelabs.VectorAtlas">melenaos/Menelabs.VectorAtlas</a>
+      &middot; map data &copy; <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain)
+      &middot; released under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+  fetch("https://cdn.jsdelivr.net/gh/melenaos/Menelabs.VectorAtlas@main/dist/world.svg")
+    .then((r) => r.text())
+    .then((svgText) => {
+      document.getElementById("map-holder").innerHTML = svgText;
+    })
+    .catch(() => {
+      document.getElementById("map-holder").innerHTML =
+        '<p class="map-loading">Map preview unavailable right now &mdash; see <a href="https://github.com/melenaos/Menelabs.VectorAtlas/blob/main/dist/world.svg">dist/world.svg</a> directly.</p>';
+    });
+</script>
+
+</body>
+</html>

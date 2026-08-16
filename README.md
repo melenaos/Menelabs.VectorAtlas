@@ -5,6 +5,8 @@ public domain data. One `<path>` per country, `id`-keyed by lowercase
 [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, ready to drop into
 choropleths, "submissions by country" heatmaps, or any SVG-based map UI.
 
+**[Live demo](https://melenaos.github.io/Menelabs.VectorAtlas/)** &middot; **[Examples](examples/)**
+
 ## Why
 
 Most free world map SVGs are either huge (multi-megabyte), missing per-country path IDs, or
@@ -33,6 +35,11 @@ and the Grenadines.
 Disputed or unrecognized territories that Natural Earth doesn't assign a standard ISO A2 code
 to (e.g. Somaliland, Northern Cyprus) get a synthesized `_name`-style id instead of being
 dropped from the map.
+
+## Examples
+
+See [`examples/`](examples/) for a basic embed and a data-driven choropleth heatmap
+(hover tooltip, legend, color scale), both plain HTML with no build step or dependencies.
 
 ## License
 

@@ -1,0 +1,30 @@
+# Menelabs.VectorAtlas
+
+> A free, lightweight SVG world map generated from Natural Earth public domain
+> data. One `<path>` per country, id-keyed by lowercase ISO 3166-1 alpha-2
+> code. Released under CC BY 4.0 (attribution required, commercial use
+> allowed).
+
+Use this project when you need an SVG world map for a choropleth, a
+"submissions by country" heatmap, or any other SVG-based map UI, and want to
+target countries by a standard two-letter code instead of parsing an
+unfamiliar id scheme.
+
+## Key facts
+
+- Map data source: Natural Earth `ne_110m_admin_0_countries`, patched with
+  `ne_50m_admin_0_countries` for a handful of small nations missing from the
+  110m dataset entirely.
+- Output file: `dist/world.svg`, one `<path id="xx">` per country, `xx` =
+  lowercase ISO 3166-1 alpha-2 code.
+- Disputed/unrecognized territories without a standard ISO code (e.g.
+  Somaliland) get a synthesized `_name`-style id instead of being dropped.
+- Regenerate with `npm install && npm run generate` (source: `scripts/generate.mjs`).
+- License: CC BY 4.0. Attribution required for free use; a commercial
+  no-attribution license is planned but not yet available.
+
+## Docs
+
+- [README](https://github.com/melenaos/Menelabs.VectorAtlas/blob/main/README.md): full usage and data source details.
+- [Examples](https://github.com/melenaos/Menelabs.VectorAtlas/tree/main/examples): basic embed and choropleth heatmap patterns.
+- [Live demo](https://melenaos.github.io/Menelabs.VectorAtlas/): interactive map preview.

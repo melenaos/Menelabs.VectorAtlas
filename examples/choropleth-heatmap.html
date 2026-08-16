@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Choropleth heatmap example</title>
+<style>
+  body { font-family: sans-serif; margin: 24px; max-width: 960px; }
+  #map { position: relative; }
+  #map svg { width: 100%; height: auto; }
+  #map svg path { stroke: #ffffff; stroke-width: 0.4; fill: #e9edf1; }
+  #map svg path:hover { stroke: #1b1f24; stroke-width: 1; }
+
+  #legend { display: flex; align-items: center; gap: 8px; margin: 12px 0 20px; font-size: 13px; }
+  #legend .bar {
+    width: 160px;
+    height: 10px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #dbe9ff, #0b3d91);
+  }
+
+  #tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: #1b1f24;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+  <h1>Choropleth heatmap</h1>
+  <p>
+    Color every country by a value, e.g. "submissions by country". Countries
+    with no data stay neutral gray.
+  </p>
+
+  <div id="legend">
+    <span>0</span>
+    <div class="bar"></div>
+    <span id="legend-max"></span>
+  </div>
+
+  <div id="map"></div>
+  <div id="tooltip"></div>
+
+  <script>
+    // Replace with your real data: { "<lowercase ISO A2 id>": <value> }
+    const data = {
+      us: 842, br: 511, de: 398, gb: 372, in: 355,
+      fr: 301, ca: 288, au: 240, jp: 233, es: 190,
+      it: 176, nl: 150, se: 120, pl: 98, mx: 84,
+      ar: 61, za: 48, ng: 33, eg: 27, gr: 19,
+    };
+
+    const maxValue = Math.max(...Object.values(data));
+    document.getElementById("legend-max").textContent = maxValue;
+
+    function colorFor(value) {
+      const t = value / maxValue; // 0..1
+      const from = [219, 233, 255]; // #dbe9ff
+      const to = [11, 61, 145];     // #0b3d91
+      const rgb = from.map((c, i) => Math.round(c + (to[i] - c) * t));
+      return `rgb(${rgb.join(",")})`;
+    }
+
+    const tooltip = document.getElementById("tooltip");
+
+    fetch("../dist/world.svg")
+      .then((r) => r.text())
+      .then((svg) => {
+        document.getElementById("map").innerHTML = svg;
+
+        for (const [id, value] of Object.entries(data)) {
+          const path = document.getElementById(id);
+          if (!path) continue; // id not present in this SVG (e.g. Antarctica-only edge cases)
+          path.style.fill = colorFor(value);
+          path.addEventListener("mousemove", (e) => {
+            tooltip.style.display = "block";
+            tooltip.style.left = e.clientX + 12 + "px";
+            tooltip.style.top = e.clientY + 12 + "px";
+            tooltip.textContent = `${id.toUpperCase()}: ${value}`;
+          });
+          path.addEventListener("mouseleave", () => {
+            tooltip.style.display = "none";
+          });
+        }
+      });
+  </script>
+</body>
+</html>

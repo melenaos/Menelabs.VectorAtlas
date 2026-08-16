@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Basic embed example</title>
+<style>
+  body { font-family: sans-serif; margin: 24px; }
+  #map svg { width: 100%; max-width: 900px; height: auto; }
+  #map svg path { fill: #d8dee4; stroke: #57606a; stroke-width: 0.4; }
+
+  /* Target countries by their lowercase ISO 3166-1 alpha-2 id. */
+  #map svg path#us,
+  #map svg path#ca,
+  #map svg path#mx {
+    fill: steelblue;
+  }
+</style>
+</head>
+<body>
+  <h1>Basic embed</h1>
+  <p>North America highlighted by targeting <code>#us</code>, <code>#ca</code>, <code>#mx</code> directly in CSS.</p>
+  <div id="map"></div>
+
+  <script>
+    fetch("../dist/world.svg")
+      .then((r) => r.text())
+      .then((svg) => { document.getElementById("map").innerHTML = svg; });
+  </script>
+</body>
+</html>
