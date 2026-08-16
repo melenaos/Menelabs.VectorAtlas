@@ -67,6 +67,9 @@
 
   code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
+  footer { margin-top: 16px; padding: 24px 0 0; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--text-dim); }
+  footer a { color: var(--text-dim); }
+
   /* Basic embed demo */
   #map-basic svg path { fill: var(--map-default); stroke: var(--map-stroke); stroke-width: 0.4; }
   #map-basic svg path#us, #map-basic svg path#ca, #map-basic svg path#mx { fill: var(--accent); }
@@ -148,6 +151,13 @@
       <div id="map-select"><div class="map-loading">Loading&hellip;</div></div>
     </div>
   </section>
+
+  <footer>
+    <a href="terms.html">Terms of Service</a>
+    &middot; <a href="privacy.html">Privacy Policy</a>
+    &middot; <a href="refund.html">Refund Policy</a>
+    &middot; <a href="pricing.html">Pricing</a>
+  </footer>
 </div>
 
 <div id="tooltip-heatmap"></div>

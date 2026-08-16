@@ -37,3 +37,6 @@ p { font-size: 15px; color: var(--text); }
   margin-top: 32px;
 }
 ul { font-size: 15px; }
+
+footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--text-dim); }
+footer a { color: var(--text-dim); }
