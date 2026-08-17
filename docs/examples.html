@@ -3,116 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Examples &mdash; Menelabs.VectorAtlas</title>
-<meta name="description" content="Live, interactive examples of Menelabs.VectorAtlas: basic embed, choropleth heatmap, and clickable country selection.">
-<style>
-  :root {
-    --bg: #ffffff;
-    --bg-alt: #f5f6f8;
-    --text: #1b1f24;
-    --text-dim: #57606a;
-    --border: #d8dee4;
-    --accent: #2563eb;
-    --accent-text: #ffffff;
-    --map-default: #e9edf1;
-    --map-hover: #c7d6f5;
-    --map-select: #2563eb;
-    --map-stroke: #ffffff;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0d1117;
-      --bg-alt: #161b22;
-      --text: #e6edf3;
-      --text-dim: #9198a1;
-      --border: #30363d;
-      --accent: #4f8cff;
-      --accent-text: #0d1117;
-      --map-default: #30363d;
-      --map-hover: #3d5a99;
-      --map-select: #4f8cff;
-      --map-stroke: #0d1117;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-  }
-  a { color: var(--accent); }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px 64px; }
-
-  header { padding: 48px 0 24px; }
-  .back { display: inline-block; margin-bottom: 16px; font-size: 14px; text-decoration: none; color: var(--text-dim); }
-  h1 { font-size: clamp(26px, 5vw, 36px); margin: 0 0 8px; }
-  header p { font-size: 16px; color: var(--text-dim); max-width: 620px; margin: 0; }
-
-  .example { padding: 32px 0; border-top: 1px solid var(--border); }
-  .example-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
-  .example h2 { font-size: 19px; margin: 0; }
-  .example .source { font-size: 13px; white-space: nowrap; }
-  .example > p { font-size: 14px; color: var(--text-dim); margin: 0 0 16px; }
-
-  .demo-frame {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--bg-alt);
-    padding: 16px;
-  }
-  .demo-frame svg { width: 100%; height: auto; display: block; }
-  .demo-frame .map-loading { text-align: center; color: var(--text-dim); padding: 40px 0; font-size: 14px; }
-
-  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-
-  footer { margin-top: 16px; padding: 24px 0 0; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--text-dim); }
-  footer a { color: var(--text-dim); }
-
-  /* Basic embed demo */
-  #map-basic svg path { fill: var(--map-default); stroke: var(--map-stroke); stroke-width: 0.4; }
-  #map-basic svg path#us, #map-basic svg path#ca, #map-basic svg path#mx { fill: var(--accent); }
-
-  /* Choropleth heatmap demo */
-  #map-heatmap svg path { fill: var(--map-default); stroke: var(--map-stroke); stroke-width: 0.4; }
-  #map-heatmap svg path:hover { stroke: var(--text); stroke-width: 1; }
-  .legend { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 13px; color: var(--text-dim); }
-  .legend .bar { width: 160px; height: 10px; border-radius: 4px; background: linear-gradient(90deg, #dbe9ff, #0b3d91); }
-  #tooltip-heatmap {
-    position: fixed;
-    pointer-events: none;
-    background: var(--text);
-    color: var(--bg);
-    font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    display: none;
-    z-index: 10;
-  }
-
-  /* Country select demo */
-  #map-select svg path { fill: var(--map-default); stroke: var(--map-stroke); stroke-width: 0.4; cursor: pointer; }
-  #map-select svg path:hover { fill: var(--map-hover); }
-  #map-select svg path.selected { fill: var(--map-select); }
-  .selected-list { margin-bottom: 12px; font-size: 14px; color: var(--text-dim); }
-  .selected-list button {
-    margin-left: 8px;
-    font-size: 12px;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text);
-    border-radius: 6px;
-    padding: 2px 8px;
-  }
-</style>
+<title>Examples - VectorAtlas</title>
+<meta name="description" content="Live, interactive examples of VectorAtlas: basic embed, choropleth heatmap, and clickable country selection.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="site.css">
 </head>
-<body>
+<body class="page-examples">
 
 <div class="wrap">
   <header>
-    <a class="back" href="index.html">&larr; Menelabs.VectorAtlas</a>
+    <a class="site-brand" href="index.html"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path class="logo-outer" d="M7.737,40.263a1,1,0,0,1-.2-1.121L14.416,24,7.533,8.857A1,1,0,0,1,8.857,7.533L24,14.416,39.142,7.533a1,1,0,0,1,1.325,1.325L33.584,24l6.883,15.143a1,1,0,0,1-1.324,1.324L24,33.584,8.858,40.467A1,1,0,0,1,7.737,40.263Z"></path><path class="logo-inner" d="M24,47a1,1,0,0,1-.937-.649L17.224,30.777,1.648,24.937a1,1,0,0,1,0-1.874l15.576-5.84L23.063,1.649a1,1,0,0,1,1.874,0l5.839,15.574,15.576,5.84a1,1,0,0,1,0,1.874l-15.576,5.84L24.937,46.351A1,1,0,0,1,24,47Z"></path><circle cx="24" cy="24" r="4" fill="#fff"></circle></svg>VectorAtlas</a>
     <h1>Examples</h1>
     <p>Live, running copies of the patterns in the <a href="https://github.com/melenaos/Menelabs.VectorAtlas/tree/main/examples">examples/</a> folder. Every map below is the actual <code>dist/world.svg</code>, fetched and inlined the same way you'd do it in your own app.</p>
   </header>
