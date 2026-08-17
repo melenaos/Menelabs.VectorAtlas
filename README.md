@@ -1,4 +1,8 @@
-# Menelabs.VectorAtlas
+<p align="center">
+  <img src="brand/favicon.svg" width="64" height="64" alt="VectorAtlas logo">
+</p>
+
+# VectorAtlas
 
 A free, lightweight SVG world map generated from [Natural Earth](https://www.naturalearthdata.com/)
 public domain data. One `<path>` per country, `id`-keyed by lowercase
@@ -48,5 +52,5 @@ Plain HTML, no build step or dependencies.
 Released under **[CC BY 4.0](LICENSE)**: free to use, including commercially, with attribution
 to Menelabs / this repository.
 
-A commercial license removing the attribution requirement is planned for a future release, but
-is not available yet.
+A commercial license removing the attribution requirement is available as a one-time purchase:
+see [pricing](https://vectoratlas.menelabs.com/pricing.html).

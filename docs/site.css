@@ -66,8 +66,23 @@ h1 { font-size: clamp(28px, 5vw, 40px); margin: 0 0 8px; }
 .page-legal ul { font-size: 15px; }
 
 header { padding: 48px 0 24px; }
+.page-legal header { padding: 0; }
 header.hero { padding: 64px 0 40px; text-align: center; }
 header p { font-size: 16px; color: var(--text-dim); max-width: 620px; margin: 0; }
+
+.hero-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  text-align: left;
+}
+.hero-nav .site-brand,
+.hero-nav .eyebrow {
+  margin-bottom: 0;
+}
 
 .eyebrow {
   display: inline-block;
